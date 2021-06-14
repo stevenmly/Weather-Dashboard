@@ -4,28 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <title>Weather Dashboard</title>
 </head>
 <body>
   <header class="text-light bg-dark ">
     <h1 class="text-center p-3">Weather Dashboard</h1>
   </header>
+  <main class="row">
+    <!-- Search for City section-->
+    <div class="col-md-4">
+      <h2>Search for a City:</h2>
+      <div>
+        <input type="text" id="input">
+        <button id="search-btn" class='btn btn-primary'><i class="fa fa-search"></i></button>
+      </div>
+    </div>
 
-  <!-- Search for City section-->
-  <div>
+    <!-- Weather Info -->
+    <div class="col-md-8">
+      <div class="border">
+        <h2 id="city-name"></h2>
+        <img id="city-icon">
+        <h3 id="date"></h3>
+        <p id="city-temp"></p>
+        <p id="city-humidity"></p>
+        <p id="city-wind-speed"></p>
+        <p id="city-uv-index"></p>
+      </div>
+      <!-- 5-Day forecast -->
+      <div>
 
-  </div>
+      </div>
 
-  <!-- Weather Info -->
-  <div>
-
-  </div>
-
-  <!-- 5-Day Forecast Section -->
-  <div>
-
-  </div>
+    </div>
+  </main>
 
 
   
