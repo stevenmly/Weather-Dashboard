@@ -8,10 +8,10 @@ A weather application that displays the current and future weather conditions of
 * CSS
 * JavaScript
 
-<!-- ## Screenshots
+## Screenshots
 ![Application-screenshot](./assets/images/screenshot1.png)
 ![Application-screenshot](./assets/images/screenshot2.png)
-![Application-screenshot](./assets/images/screenshot3.png) -->
+![Application-screenshot](./assets/images/screenshot3.png)
 
 ## Website
 

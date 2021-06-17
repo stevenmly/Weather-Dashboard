@@ -22,6 +22,7 @@ function formSubmitHandler(event) {
     if(city) {
         getCurrentWeather(city);
         getForecast(city);
+        saveSearch(city);
         input.value = "";
     } else {
         alert("Please enter a city");
@@ -104,6 +105,8 @@ function displayWeatherData(date, temp, humidity, windSpeed, uvIndex, icon) {
 }
 
 function getForecast(daily) {
+    foreCastInfo.innerHTML="";
+
     for (i=0; i < 5; i++) {
         var dailyTemp = daily[i].temp.day;
         var dailyHumidity = daily[i].humidity;
@@ -116,6 +119,7 @@ function getForecast(daily) {
 
 function displayForecast(hum, temp, date, icon) {
         
+    
     var cardDiv = document.createElement('div');
     cardDiv.setAttribute('class', 'card bg-primary text-white p-2 m-2');
     var cardTitle = document.createElement('h5');
@@ -125,16 +129,16 @@ function displayForecast(hum, temp, date, icon) {
     var iconSrc = 'http://openweathermap.org/img/wn/'+icon+'@2x.png'
     iconCon.setAttribute('src', iconSrc);
 
-    var cardBody1 = document.createElement('p');
-    cardBody1.setAttribute('class', 'card-text');
-    cardBody1.textContent = "Temperature: " + temp + ' F';
-    var cardBody2 = document.createElement('p');
-    cardBody2.setAttribute('class', 'card-text');
-    cardBody2.textContent = 'Humidity: ' + hum + '%';
+    var cardText1 = document.createElement('p');
+    cardText1.setAttribute('class', 'card-text');
+    cardText1.textContent = "Temperature: " + temp + ' F';
+    var cardText2 = document.createElement('p');
+    cardText2.setAttribute('class', 'card-text');
+    cardText2.textContent = 'Humidity: ' + hum + '%';
     cardDiv.appendChild(cardTitle);
     cardDiv.appendChild(iconCon);
-    cardDiv.appendChild(cardBody1);
-    cardDiv.appendChild(cardBody2);
+    cardDiv.appendChild(cardText1);
+    cardDiv.appendChild(cardText2);
     foreCastInfo.appendChild(cardDiv);
 };
 
@@ -151,7 +155,10 @@ function saveSearch(city) {
     }
     cities.push(city);
     localStorage.setItem('cities', JSON.stringify(cities));
+
 }
+
+
 
 
 
