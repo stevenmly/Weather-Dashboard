@@ -136,8 +136,24 @@ function displayForecast(hum, temp, date, icon) {
     cardDiv.appendChild(cardBody1);
     cardDiv.appendChild(cardBody2);
     foreCastInfo.appendChild(cardDiv);
-    
 };
+
+function saveSearch(city) {
+    var cities = JSON.parse(localStorage.getItem('cities'));
+
+    if (cities == null) {
+        cities = [];
+    }
+    for (i = 0; i < cities.length; i++) {
+        if (city.toLowerCase() === cities[i].toLowerCase()) {
+            return;
+        }
+    }
+    cities.push(city);
+    localStorage.setItem('cities', JSON.stringify(cities));
+}
+
+
 
 
 
