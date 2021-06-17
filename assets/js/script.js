@@ -9,6 +9,7 @@ var cityTemp = document.querySelector("#city-temp");
 var cityHumidity = document.querySelector("#city-humidity");
 var cityWindSpeed = document.querySelector("#city-wind-speed");
 var cityUV = document.querySelector("#city-uv-index");
+var foreCastInfo = document.querySelector("#foreCast");
 
 searchBtn.addEventListener("click", formSubmitHandler);
 
@@ -77,7 +78,9 @@ function collectWeatherData(data) {
     var windSpeed = data.current.wind_speed;
     var uvIndex = data.current.uvi;
     var icon = data.current.weather[0].icon;
+    var daily = data.daily;
 
+    getForecast(daily);
     displayWeatherData(date, temp, humidity, windSpeed, uvIndex, icon);
 }
 
@@ -100,11 +103,41 @@ function displayWeatherData(date, temp, humidity, windSpeed, uvIndex, icon) {
     weatherIcon.setAttribute('src', iconSrc);
 }
 
-
-function getForecast(city) {
-    fetch("https://api.openweathermap.org/data/2.5/forecast?id="
-    + city + apiKey + "&units=imperial")
-    .then(function(response){
-        return response.json();
-    })
+function getForecast(daily) {
+    for (i=0; i < 5; i++) {
+        var dailyTemp = daily[i].temp.day;
+        var dailyHumidity = daily[i].humidity;
+        var date = new Date();
+        date = date.getMonth()+1 + '/' + (date.getDate()+i) + '/' + date.getFullYear();
+        var icon = daily[i].weather[0].icon;
+        displayForecast(dailyHumidity, dailyTemp, date, icon);
+    }
 }
+
+function displayForecast(hum, temp, date, icon) {
+        
+    var cardDiv = document.createElement('div');
+    cardDiv.setAttribute('class', 'card bg-primary text-white p-2 m-2');
+    var cardTitle = document.createElement('h5');
+    cardTitle.setAttribute('class', 'card-title text-center');
+    cardTitle.textContent = date;
+    var iconCon = document.createElement('img');
+    var iconSrc = 'http://openweathermap.org/img/wn/'+icon+'@2x.png'
+    iconCon.setAttribute('src', iconSrc);
+
+    var cardBody1 = document.createElement('p');
+    cardBody1.setAttribute('class', 'card-text');
+    cardBody1.textContent = "Temperature: " + temp + ' F';
+    var cardBody2 = document.createElement('p');
+    cardBody2.setAttribute('class', 'card-text');
+    cardBody2.textContent = 'Humidity: ' + hum + '%';
+    cardDiv.appendChild(cardTitle);
+    cardDiv.appendChild(iconCon);
+    cardDiv.appendChild(cardBody1);
+    cardDiv.appendChild(cardBody2);
+    foreCastInfo.appendChild(cardDiv);
+    
+};
+
+
+
