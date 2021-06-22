@@ -11,6 +11,8 @@ var cityWindSpeed = document.querySelector("#city-wind-speed");
 var cityUV = document.querySelector("#city-uv-index");
 var foreCastInfo = document.querySelector("#foreCast");
 
+var cities= [];
+
 searchBtn.addEventListener("click", formSubmitHandler);
 
 function formSubmitHandler(event) {
@@ -94,7 +96,7 @@ function displayWeatherData(date, temp, humidity, windSpeed, uvIndex, icon) {
 
     if (uvIndex < 2) {
         cityUV.setAttribute('class', 'bg-success text-light p-2');
-    } else if (uvIndex < 6 && UVindex >= 2) {
+    } else if (uvIndex < 6 && uvIndex >= 2) {
         cityUV.setAttribute('class', 'bg-warning text-light p-2');
     } else if (uvIndex >= 6) {
         cityUV.setAttribute('class', 'bg-danger text-light p-2');
@@ -142,21 +144,7 @@ function displayForecast(hum, temp, date, icon) {
     foreCastInfo.appendChild(cardDiv);
 };
 
-function saveSearch(city) {
-    var cities = JSON.parse(localStorage.getItem('cities'));
 
-    if (cities == null) {
-        cities = [];
-    }
-    for (i = 0; i < cities.length; i++) {
-        if (city.toLowerCase() === cities[i].toLowerCase()) {
-            return;
-        }
-    }
-    cities.push(city);
-    localStorage.setItem('cities', JSON.stringify(cities));
-
-}
 
 
 
