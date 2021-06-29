@@ -10,6 +10,7 @@ var cityHumidity = document.querySelector("#city-humidity");
 var cityWindSpeed = document.querySelector("#city-wind-speed");
 var cityUV = document.querySelector("#city-uv-index");
 var foreCastInfo = document.querySelector("#foreCast");
+var searchSection = document.querySelector("#search-section")
 
 var cities= [];
 
@@ -23,8 +24,6 @@ function formSubmitHandler(event) {
 
     if(city) {
         getCurrentWeather(city);
-        getForecast(city);
-        saveSearch(city);
         input.value = "";
     } else {
         alert("Please enter a city");
@@ -70,6 +69,7 @@ function getOneCallAPI(data, city) {
                 return;
             }
         })
+    saveSearch(city);
 }
 
 function collectWeatherData(data) {
@@ -144,6 +144,46 @@ function displayForecast(hum, temp, date, icon) {
     foreCastInfo.appendChild(cardDiv);
 };
 
+function saveSearch(city) {
+    var cities = JSON.parse(localStorage.getItem('cities'));
+    
+    if (cities === null) {
+        cities = [];
+        cities.push(city);
+        localStorage.setItem('cities', JSON.stringify(cities));
+
+        var btn = document.createElement('button');
+        btn.setAttribute('class', 'btn w-100 p-2 m-1');
+        btn.textContent = city;
+        searchSection.appendChild(btn);
+
+    } else {
+        cities.push(city);
+        localStorage.setItem('cities', JSON.stringify(cities));
+
+        var btn = document.createElement('button');
+        btn.setAttribute('class', 'btn w-100 p-2 m-1');
+        btn.textContent = city;
+        searchSection.appendChild(btn);
+    }
+    
+}
+
+function loadPage() {
+    var cities = JSON.parse(localStorage.getItem('cities'));
+    if (cities == null) {
+        return;
+    }
+
+    for (i = 0; i < cities.length; i++) {
+        var btn = document.createElement('button');
+        btn.setAttribute('class', 'btn w-100 p-2 m-1');
+        btn.textContent = cities[i];
+        searchSection.appendChild(btn);
+    }
+}
+
+loadPage();
 
 
 
