@@ -109,7 +109,7 @@ function displayWeatherData(date, temp, humidity, windSpeed, uvIndex, icon) {
 function getForecast(daily) {
     foreCastInfo.innerHTML="";
 
-    for (i=0; i < 5; i++) {
+    for (i=1; i < 6; i++) {
         var dailyTemp = daily[i].temp.day;
         var dailyHumidity = daily[i].humidity;
         var date = new Date();
@@ -149,41 +149,53 @@ function saveSearch(city) {
     
     if (cities === null) {
         cities = [];
-        cities.push(city);
-        localStorage.setItem('cities', JSON.stringify(cities));
-
-        var btn = document.createElement('button');
-        btn.setAttribute('class', 'btn w-100 p-2 m-1');
-        btn.textContent = city;
-        searchSection.appendChild(btn);
-
-    } else {
-        cities.push(city);
-        localStorage.setItem('cities', JSON.stringify(cities));
-
-        var btn = document.createElement('button');
-        btn.setAttribute('class', 'btn w-100 p-2 m-1');
-        btn.textContent = city;
-        searchSection.appendChild(btn);
+    } 
+    for (i = 0; i < cities.length; i++) {
+        if (city.toUpperCase() === cities[i].toUpperCase()) {
+            return;
+        }
     }
-    
-}
+    cities.push(city);
+    localStorage.setItem('cities', JSON.stringify(cities));
+
+    var btn = document.createElement('button');
+    btn.setAttribute('class', 'btn w-100 p-2 m-1');
+    btn.setAttribute('onclick', 'loadPreviousSearch(this.value)');
+    btn.setAttribute('value', city);
+    btn.textContent = city;
+    searchSection.appendChild(btn);
+};
 
 function loadPage() {
     var cities = JSON.parse(localStorage.getItem('cities'));
-    if (cities == null) {
+    if (cities === null) {
         return;
     }
 
     for (i = 0; i < cities.length; i++) {
         var btn = document.createElement('button');
         btn.setAttribute('class', 'btn w-100 p-2 m-1');
+        btn.setAttribute('onclick', 'loadPreviousSearch(this.value)');
+        btn.setAttribute('value', cities[i]);
         btn.textContent = cities[i];
         searchSection.appendChild(btn);
     }
 }
 
 loadPage();
+
+function loadPreviousSearch(city) {
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + apiKey + "&units=imperial";
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                getOneCallAPI(data, city);
+            })
+        } else {
+            alert('Error: ' + response.status);
+        }
+    });
+};
 
 
 
